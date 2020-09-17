@@ -40,10 +40,20 @@ public class SimuladorUI {
     private By adressCity = By.className("address_city");
     private By adressCountry = By.className("address_country_name");
     private By adressPhone = By.className("address_phone_mobile");
-    private By buttonProceedToCheckOut = By.className("button-medium");
+    private By buttonProceedToCheckOut = By.name("processAddress");
     private By pageShipping = By.id("carrier_area");
     private By selectTermsOfService = By.id("cgv");
-    private By buttonProceedToCheckOutShipping = By.name("processAddress");
+    private By buttonProceedToCheckOutShipping = By.name("processCarrier");
+    private By totalDosProdutos = By.id("total_product");
+    private By totalDoFrete = By.id("total_shipping");
+    private By total = By.id("total_price");
+    private By pleaseChooseYourPaymentMethod = By.className("page-heading");
+    private By pagamentoBanco = By.className("bankwire");
+    private By orderSumary = By.className("page-heading");
+    private By iConfirmMyOrder = By.xpath("//*[@id=\"cart_navigation\"]/button");
+    private By orderConfirmation = By.className("page-heading");
+
+
 
     private String nomeDoProdutoEscolhido;
     private String produtoSelecionadoParaCompra;
@@ -82,7 +92,7 @@ public class SimuladorUI {
 
     public void criarUsuario(String email) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(authenticationUser));
-        driver.findElement(criacaoDeEmail).sendKeys("value", email);
+        driver.findElement(criacaoDeEmail).sendKeys(email);
         driver.findElement(botaoCreateAnAccount).click();
     }
 
@@ -127,10 +137,36 @@ public class SimuladorUI {
         driver.findElement(buttonProceedToCheckOut).click();
     }
 
-   public void aceiteTermosDeServico(){
+    public void aceiteTermosDeServico(){
         wait.until(ExpectedConditions.visibilityOfElementLocated(pageShipping));
         driver.findElement(selectTermsOfService).click();
         driver.findElement(buttonProceedToCheckOutShipping).click();
+    }
+
+    public void valorTotaldaCompra() throws Exception {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(pleaseChooseYourPaymentMethod));
+        String stringTotalProduto = driver.findElement(totalDosProdutos).getText();
+        String stringTotalFrete = driver.findElement(totalDoFrete).getText();
+        String stringValorTotal = driver.findElement(total).getText();
+
+        Double totalProduto = Double.parseDouble(stringTotalProduto.replace("$", ""));
+        Double totalFrete = Double.parseDouble(stringTotalFrete.replace("$", ""));
+        Double valorTotal = Double.parseDouble(stringValorTotal.replace("$", ""));
+
+        if (!(totalProduto+totalFrete == valorTotal))
+            throw new Exception("Valor do produto e frete divergente ao valor total da compra");
+
+        driver.findElement(pagamentoBanco).click();
+
+    }
+
+    public void selecionarMetodoDePagamento(){
+        wait.until(ExpectedConditions.visibilityOfElementLocated(orderSumary));
+        driver.findElement(iConfirmMyOrder).click();
+    }
+
+    public void confirmacaoDeCompra(){
+        wait.until(ExpectedConditions.visibilityOfElementLocated(orderConfirmation));
     }
 
 }

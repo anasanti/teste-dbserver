@@ -25,11 +25,14 @@ public class UITest {
         simulador.seguirParaOCarrinho();
         simulador.seguirParaOSignIn();
         simulador.validarItemAdicionadoEIgualAoEscolhido();
-        simulador.criarUsuario("anasaanti@dbserver.com.br");
+        simulador.criarUsuario("testeemailaaa@dbserver.com.br");
         simulador.cadastroDeInformacaoPessoal("Ana Carolina","Santi","debeaver");
         simulador.cadastroDeEndereco("650 S R L Thornton Fwy", "Dallas","75203", "14695547500");
         simulador.confirmacaoDeEndereco("Ana Carolina Santi","650 S R L Thornton Fwy","Dallas, Texas 75203","United States","14695547500" );
         simulador.aceiteTermosDeServico();
+        simulador.valorTotaldaCompra();
+        simulador.selecionarMetodoDePagamento();
+        simulador.confirmacaoDeCompra();
     }
 
     @After
