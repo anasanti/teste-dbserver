@@ -1,6 +1,8 @@
 package desafio;
 
+import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import selenium.DriveManager;
 
@@ -13,12 +15,27 @@ public class UITest {
     public void setUp() {
 
         driver = new DriveManager("Chrome");
-        wait = new WebDriverWait(driver.getDriver(), 5);
+        wait = new WebDriverWait(driver.getDriver(), 15);
         simulador = new SimuladorUI(driver.getDriver(), wait);
     }
 
-    @test
+    @Test
+    public void fazerCompraDeUmProduto() throws Exception {
+        simulador.addoProdutoNoCarrinho();
+        simulador.seguirParaOCarrinho();
+        simulador.seguirParaOSignIn();
+        simulador.validarItemAdicionadoEIgualAoEscolhido();
+        simulador.criarUsuario("anapsanti@dbserver.com.br");
+        simulador.cadastroDeInformacaoPessoal("Ana Carolina","Santi","debeaver");
+        simulador.cadastroDeEndereco("650 S R L Thornton Fwy", "Dallas","75203", "14695547500");
+        simulador.confirmacaoDeEndereco("Ana Carolina Santi","650 S R L Thornton Fwy","Dallas, Texas 75203","United States","14695547500" );
+    }
 
+    @After
+    public void closePage() {
+
+        driver.endSession();
+    }
 
 
 }
