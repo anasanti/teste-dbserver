@@ -35,13 +35,15 @@ public class SimuladorUI {
     private By phoneMobile = By.id("phone_mobile");
     private By buttonSubimitAccount = By.id("submitAccount");
     private By confirmAdress = By.className("page-heading");
-    private By choseAdress = By.id("id_address_delivery");
     private By adressName = By.className("address_firstname");
     private By adressAdress = By.className("address_address1");
     private By adressCity = By.className("address_city");
     private By adressCountry = By.className("address_country_name");
     private By adressPhone = By.className("address_phone_mobile");
-
+    private By buttonProceedToCheckOut = By.className("button-medium");
+    private By pageShipping = By.id("carrier_area");
+    private By selectTermsOfService = By.id("cgv");
+    private By buttonProceedToCheckOutShipping = By.name("processAddress");
 
     private String nomeDoProdutoEscolhido;
     private String produtoSelecionadoParaCompra;
@@ -121,7 +123,14 @@ public class SimuladorUI {
 
         if (!celularEsperado.equals(driver.findElement(adressPhone).getText()))
             throw new Exception("Celular divergentes");
+
+        driver.findElement(buttonProceedToCheckOut).click();
     }
 
+   public void aceiteTermosDeServico(){
+        wait.until(ExpectedConditions.visibilityOfElementLocated(pageShipping));
+        driver.findElement(selectTermsOfService).click();
+        driver.findElement(buttonProceedToCheckOutShipping).click();
+    }
 
 }
