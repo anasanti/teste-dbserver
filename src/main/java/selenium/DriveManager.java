@@ -27,11 +27,11 @@ public class DriveManager {
     public void selecionarNavegador(NavegadorEnum navegador) {
         if(navegador == NavegadorEnum.CHROME)
         {
-            System.setProperty("webdriver.chrome.driver", "src\\main\\resources\\driver\\chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver", "src/main/resources/driver/chromedriver.exe");
             driver = new ChromeDriver();
         }
         else  {
-            System.setProperty("webdriver.gecko.driver","src\\main\\resources\\driver\\geckodriver.exe");
+            System.setProperty("webdriver.gecko.driver","src/main/resources/driver/chromedriver.exe");
             driver = new FirefoxDriver();
         }
 

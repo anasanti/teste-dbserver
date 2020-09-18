@@ -12,6 +12,9 @@ Foi realizado testes funcionais e de estrutura na UI e de API
 
 Teste
 ------------------
+Realizado por BDD em RealizarCompra.feature.
+Teste de API em APITest
+Evidências dos testes automatizados se encomtra em screenshots
 
 Para execucao dos testes e necessario ter os browser nas versoes abaixo
 ------------------
@@ -22,7 +25,7 @@ O brownser de execucao:
  ------------------
 O navegador está definido para rodar nas três versões, para alterar para a versão desejada acessar 
 
-    src\test\java\resources\RealizarCompra.feature
+    src/test/java/resources/RealizarCompra.feature
 
 Na opção de Exemplos de Navegadores
 
@@ -38,3 +41,14 @@ Selenium - 3.141.59
 Autora
 ------------------
 Ana Carolina Prates Santi
+
+Oportunidade de melhoria
+------------------
+Criação do relatório de caso de testes, com:
+<br /Definição do projeto
+<br /Objetivo do teste
+<br /Resumo do teste
+<br /Defeito
+
+Criação de casos positivos e negativos do site.
+Validação do sistema.

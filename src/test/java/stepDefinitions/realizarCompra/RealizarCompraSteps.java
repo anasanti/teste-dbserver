@@ -15,8 +15,14 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import ru.yandex.qatools.ashot.AShot;
+import ru.yandex.qatools.ashot.Screenshot;
+import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 import selenium.DriveManager;
 
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Random;
@@ -30,14 +36,16 @@ public class RealizarCompraSteps {
     private String nomeDoProdutoEscolhido;
 
     @Dado("^que estou acessando a url \"([^\"]*)\" pelo navegador \"([^\"]*)\"$")
-    public void queEstouAcessandoAUrlPeloNavegador(String url, NavegadorEnum navegador) {
+    public void queEstouAcessandoAUrlPeloNavegador(String url, NavegadorEnum navegador) throws IOException {
         this.driveManager = new DriveManager(navegador, url);
         this.wait = new WebDriverWait(driveManager.getDriver(), 15);
         this.webDriver = driveManager.getDriver();
+
+        capturarTela("queEstouAcessandoAUrlPeloNavegador");
     }
 
     @Quando("^adiciono um produto escolhido no carrinho$")
-    public void adicionoUmProdutoEscolhidoNoCarrinho() {
+    public void adicionoUmProdutoEscolhidoNoCarrinho() throws IOException {
         Actions acao = new Actions(webDriver);
         WebElement primeiroProduto = webDriver.findElements(By.className("ajax_block_product")).get(0);
 
@@ -50,17 +58,21 @@ public class RealizarCompraSteps {
         acao.moveToElement(primeiroProduto)
                 .moveToElement(primeiroProduto.findElement(By.className("ajax_add_to_cart_button")))
                 .click().build().perform();
+
+        capturarTela("adicionoUmProdutoEscolhidoNoCarrinho");
     }
 
 
     @Quando("^prossigo para finalizar a compra$")
-    public void prossigoParaFinalizarACompra() {
+    public void prossigoParaFinalizarACompra() throws IOException {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("layer_cart")));
         webDriver.findElements(By.className("button-medium")).get(0).click();
+
+        capturarTela("prossigoParaFinalizarACompra");
     }
 
     @Quando("^valido se o produto foi corretamente adicionado ao carrinho de compra$")
-    public void validoSeOProdutoFoiCorretamenteAdicionadoAoCarrinhoDeCompra() throws Exception {
+    public void validoSeOProdutoFoiCorretamenteAdicionadoAoCarrinhoDeCompra() {
         String textoProdutoSelecionadoParaCompra = webDriver
                 .findElement(By.id("cart_summary"))
                 .findElement(By.className("product-name")).getText();
@@ -69,7 +81,9 @@ public class RealizarCompraSteps {
     }
 
     @Quando("^sigo para a etapa de cadastro$")
-    public void sigoParaAEtapaDeCadastro() {
+    public void sigoParaAEtapaDeCadastro() throws IOException {
+        capturarTela("sigoParaAEtapaDeCadastro");
+
         webDriver.findElement(By.className("standard-checkout")).click();
     }
 
@@ -82,7 +96,7 @@ public class RealizarCompraSteps {
     }
 
     @Quando("^informe os seguintes dados de cadastro$")
-    public void informeOsSeguintesDadosDeCadastro(DataTable dataTable) {
+    public void informeOsSeguintesDadosDeCadastro(DataTable dataTable) throws IOException {
         Map<String, String> dataMap = dataTable.asMap(String.class, String.class);
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("account_creation")));
@@ -99,16 +113,20 @@ public class RealizarCompraSteps {
         webDriver.findElement(By.id("postcode")).sendKeys(dataMap.get("cep"));
         webDriver.findElement(By.id("id_country")).sendKeys(dataMap.get("pais"));
         webDriver.findElement(By.id("phone_mobile")).sendKeys(dataMap.get("celular"));
+
+        capturarTela("informeOsSeguintesDadosDeCadastro");
     }
 
     @Quando("^confirmo o cadastro$")
-    public void confirmoOCadastro() {
+    public void confirmoOCadastro() throws IOException {
         webDriver.findElement(By.id("submitAccount")).click();
+
+        capturarTela("confirmoOCadastro");
     }
 
 
     @Quando("^valido se as seguintes informações estão corretas$")
-    public void validoSeAsSeguintesInformacoesEstaoCorretas(DataTable dataTable) throws Exception {
+    public void validoSeAsSeguintesInformacoesEstaoCorretas(DataTable dataTable) {
         Map<String, String> dataMap = dataTable.asMap(String.class, String.class);
 
         String nomeCadastrado = webDriver.findElement(By.className("address_firstname")).getText();
@@ -130,9 +148,11 @@ public class RealizarCompraSteps {
     }
 
     @Quando("^aceito os termos de serviço$")
-    public void aceitoOsTermosDeServiço() {
+    public void aceitoOsTermosDeServico() throws IOException {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("uniform-cgv")));
         webDriver.findElement(By.id("uniform-cgv")).click();
+
+        capturarTela("aceitoOsTermosDeServico");
     }
 
     @Quando("^sigo para a forma de pagamento$")
@@ -141,7 +161,7 @@ public class RealizarCompraSteps {
     }
 
     @Quando("^valido o valor total da compra$")
-    public void validoOValorTotalDaCompra() throws Exception {
+    public void validoOValorTotalDaCompra() throws IOException {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("total_product")));
         String stringTotalProduto = webDriver.findElement(By.id("total_product")).getText();
         String stringTotalFrete = webDriver.findElement(By.id("total_shipping")).getText();
@@ -152,26 +172,32 @@ public class RealizarCompraSteps {
         BigDecimal valorTotal = new BigDecimal(stringValorTotal.replace("$", ""));
 
         Assert.assertEquals((totalFrete.add(totalProduto)), valorTotal);
+
+        capturarTela("validoOValorTotalDaCompra");
     }
 
     @Quando("^seleciono o metodo de pagamento$")
-    public void selecionoOMetodoDePagamento() {
+    public void selecionoOMetodoDePagamento() throws IOException {
         webDriver.findElement(By.className("bankwire")).click();
+
+        capturarTela("selecionoOMetodoDePagamento");
     }
 
     @Entao("^confirmo a compra$")
     public void confirmoACompra() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"cart_navigation\"]/button")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("cart_navigation")));
         webDriver.findElement(By.id("cart_navigation"))
                 .findElement(By.className("button")).click();
     }
 
     @Entao("^valido se foi finalizada com sucesso$")
-    public void validoSeFoiFinalizadaComSucesso() {
+    public void validoSeFoiFinalizadaComSucesso() throws IOException {
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("box")));
         String confirmacaoDeCompra = webDriver.findElement(By.className("cheque-indent")).getText();
 
         Assert.assertEquals("Your order on My Store is complete.", confirmacaoDeCompra);
+
+        capturarTela("validoSeFoiFinalizadaComSucesso");
     }
 
     @After
@@ -182,4 +208,10 @@ public class RealizarCompraSteps {
     private String geradorEmail(){
         return "teste"+new Random().nextInt(1000000)+"@teste.com";
     }
+
+    private void capturarTela(String nomeArquivo) throws IOException {
+        Screenshot screenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(webDriver);
+        ImageIO.write(screenshot.getImage(), "jpg", new File("src/screenshots/" + nomeArquivo + ".jpg"));
+    }
+
 }

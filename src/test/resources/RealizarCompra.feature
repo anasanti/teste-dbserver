@@ -41,4 +41,3 @@ Funcionalidade: Realizar uma compra
     Exemplos:
       | navegador |
       | CHROME    |
-      | FIREFOX   |
