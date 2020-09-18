@@ -156,11 +156,13 @@ public class SimuladorUI {
         if (!(totalProduto+totalFrete == valorTotal))
             throw new Exception("Valor do produto e frete divergente ao valor total da compra");
 
-        driver.findElement(pagamentoBanco).click();
-
     }
 
     public void selecionarMetodoDePagamento(){
+        driver.findElement(pagamentoBanco).click();
+    }
+
+    public void confirmoCompra(){
         wait.until(ExpectedConditions.visibilityOfElementLocated(orderSumary));
         driver.findElement(iConfirmMyOrder).click();
     }
