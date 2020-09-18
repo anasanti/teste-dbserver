@@ -45,10 +45,10 @@ Ana Carolina Prates Santi.
 Oportunidade de melhoria
 ------------------
 Criação do relatório de caso de testes, com:
-<br /Definição do projeto;
-<br /Objetivo do teste;
-<br /Resumo do teste;
-<br /Defeito.
+<br />Definição do projeto;
+<br />Objetivo do teste;
+<br />Resumo do teste;
+<br />Defeito.
 
 Criação de casos positivos e negativos do site.
 Validação do sistema.
