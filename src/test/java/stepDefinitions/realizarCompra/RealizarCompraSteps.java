@@ -8,10 +8,12 @@ import cucumber.api.java.pt.Entao;
 import enums.NavegadorEnum;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import selenium.DriveManager;
 
@@ -42,6 +44,8 @@ public class RealizarCompraSteps {
         wait.until(ExpectedConditions.visibilityOf(primeiroProduto));
 
         this.nomeDoProdutoEscolhido = primeiroProduto.findElement(By.className("product-name")).getText();
+
+        ((JavascriptExecutor) webDriver).executeScript("arguments[0].scrollIntoView();", primeiroProduto);
 
         acao.moveToElement(primeiroProduto)
                 .moveToElement(primeiroProduto.findElement(By.className("ajax_add_to_cart_button")))
@@ -87,7 +91,11 @@ public class RealizarCompraSteps {
         webDriver.findElement(By.id("passwd")).sendKeys(dataMap.get("senha"));
         webDriver.findElement(By.id("address1")).sendKeys(dataMap.get("endereco"));
         webDriver.findElement(By.id("city")).sendKeys(dataMap.get("cidade"));
-        webDriver.findElement(By.id("id_state")).sendKeys(dataMap.get("estado"));
+
+        WebElement elementEstado =  webDriver.findElement(By.id("id_state"));
+        Select dropDownEstado = new Select(elementEstado);
+        dropDownEstado.selectByVisibleText(dataMap.get("estado"));
+
         webDriver.findElement(By.id("postcode")).sendKeys(dataMap.get("cep"));
         webDriver.findElement(By.id("id_country")).sendKeys(dataMap.get("pais"));
         webDriver.findElement(By.id("phone_mobile")).sendKeys(dataMap.get("celular"));

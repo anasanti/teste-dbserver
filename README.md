@@ -6,20 +6,25 @@ Os testes podem ser executados atraves de uma IDE ou pelo terminal com o comando
 
     mvn test
 
-Tecnicas de testes escolhidas.
+Tecnicas de testes escolhidas
+------------------
 Foi realizado testes funcionais e de estrutura na UI e de API
+
 Teste
 ------------------
 
 Para execucao dos testes e necessario ter os browser nas versoes abaixo
 ------------------
 Chrome - Version 85.0.4183.87
-<br />Firefox - Version 78.0.2
-<br />Edge - Version 41.16299.1004.0
+<br />Firefox - Version 80.0.1
 
-O brownser de execucao pode ser alterado em:
+O brownser de execucao:
  ------------------
-Caso queira que algum teste 
+O navegador está definido para rodar nas três versões, para alterar para a versão desejada acessar 
+
+    src\test\java\resources\RealizarCompra.feature
+
+Na opção de Exemplos de Navegadores
 
 Desenvolvido com
 ------------------

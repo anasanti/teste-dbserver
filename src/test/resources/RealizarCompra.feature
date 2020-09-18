@@ -4,8 +4,8 @@
 Funcionalidade: Realizar uma compra
 
   @sucesso @compra @andamento
-  Cenario: Realizar uma compra com sucesso
-    Dado que estou acessando a url "http://automationpractice.com/index.php?" pelo navegador "CHROME"
+  Esquema do Cenario: Realizar uma compra com sucesso
+    Dado que estou acessando a url "http://automationpractice.com/index.php?" pelo navegador "<navegador>"
     Quando adiciono um produto escolhido no carrinho
     E prossigo para finalizar a compra
     E valido se o produto foi corretamente adicionado ao carrinho de compra
@@ -37,3 +37,8 @@ Funcionalidade: Realizar uma compra
     E seleciono o metodo de pagamento
     Entao confirmo a compra
     E valido se foi finalizada com sucesso
+
+    Exemplos:
+      | navegador |
+      | CHROME    |
+      | FIREFOX   |

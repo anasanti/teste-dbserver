@@ -30,14 +30,11 @@ public class DriveManager {
             System.setProperty("webdriver.chrome.driver", "src\\main\\resources\\driver\\chromedriver.exe");
             driver = new ChromeDriver();
         }
-        else if (navegador == NavegadorEnum.FIREFOX) {
+        else  {
             System.setProperty("webdriver.gecko.driver","src\\main\\resources\\driver\\geckodriver.exe");
             driver = new FirefoxDriver();
         }
-        else{
-            System.setProperty("webdriver.edge.driver","src\\main\\resources\\driver\\msedgedriver.exe");
-            driver = new EdgeDriver();
-        }
+
     }
 
     public void finalizarSessao() {
